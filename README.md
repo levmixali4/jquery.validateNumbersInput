@@ -7,8 +7,9 @@ A small widget that allows to validate that input is numbers
 
 Required jQuery
 
-to validate user input just call to function validateNumbersInput on jQuery object
-this examle will validate all text inputs on page:
+To validate user input just call to function validateNumbersInput on jQuery object.
+
+This examle will validate all text inputs on page:
   $('input[type=text]').validateNumbersInput();
   
 Tested on:
