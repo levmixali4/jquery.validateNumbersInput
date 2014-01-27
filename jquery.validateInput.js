@@ -11,67 +11,65 @@
 
 				this.bind(
 				{
-					keydown: function (e) {
-						var charCode = (e.which) ? e.which : e.keyCode;
-						if (charCode == cmdLeftCode) {
-						    cmdDownLeft = true;
-						    return true;
-						}
-						if (charCode == cmdRightCode) {
-						    cmdDownRight = true;
-						    return true;
-						}
-						if (charCode == 17) {
-						    ctrlDown = true;
-						    return true;
-						}
-						var isMetaKeyPressed = ctrlDown || cmdDownLeft || cmdDownRight;
-						if (charCode == 0 && isMetaKeyPressed) // bag in mac safari
-                            return true;
-						return (charCode > 32 && charCode < 57) ||           // navigation + main numbers
+				    keydown: function (e) {
+				        var charCode = (e.which) ? e.which : e.keyCode;
+				        if (charCode == cmdLeftCode) {
+				            cmdDownLeft = true;
+				            return true;
+				        }
+				        if (charCode == cmdRightCode) {
+				            cmdDownRight = true;
+				            return true;
+				        }
+				        if (charCode == 17) {
+				            ctrlDown = true;
+				            return true;
+				        }
+				        var isMetaKeyPressed = ctrlDown || cmdDownLeft || cmdDownRight;
+				        if (charCode == 0 && isMetaKeyPressed) // bag in mac safari
+				            return true;
+				        var modificationChar = charCode == 86 || charCode == 88 || charCode == 90 || charCode == 67;
+				        return (charCode > 32 && charCode < 57) ||           // navigation + main numbers
 							   (charCode > 95 && charCode < 106) ||          // right numbers
 							   charCode == 8 ||                              // backspace
 							   charCode == 190 || charCode == 110 ||         // decimal point
-							   (charCode == 86 && isMetaKeyPressed) ||       // ctrl + v (paste)
-							   (charCode == 67 && isMetaKeyPressed);         // ctrl + c (copy)
-						// more codes are here http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
-					},
-					keyup: function (e) {
-						var charCode = (e.which) ? e.which : e.keyCode;
-						if (charCode == cmdLeftCode) {
-							cmdDownLeft = false;
-						}
-						if (charCode == cmdRightCode) {
-							cmdDownRight = false;
-						}
-						if (charCode == 17) {
-							ctrlDown = false;
-						}
-					},
-					paste: function (e) {
-						var clipBoard;
-						try
-						{
-							clipBoard = e.originalEvent.clipboardData.getData('Text')
-						}
-						catch(exeption)
-						{
-							try
-							{
-								clipBoard = clipboardData.getData("text");
-							}
-							catch (subexeption) {
-							}
-						}
+							   (modificationChar && isMetaKeyPressed);         // ctrl + c (copy)
+				        // more codes are here http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
+				    },
+				    keyup: function (e) {
+				        var charCode = (e.which) ? e.which : e.keyCode;
+				        if (charCode == cmdLeftCode) {
+				            cmdDownLeft = false;
+				        }
+				        if (charCode == cmdRightCode) {
+				            cmdDownRight = false;
+				        }
+				        if (charCode == 17) {
+				            ctrlDown = false;
+				        }
+				    },
+				    paste: function (e) {
+				        var clipBoard;
+				        try
+				        {
+				            clipBoard = e.originalEvent.clipboardData.getData('Text')
+				        }
+				        catch(exeption)
+				        {
+				            try
+				            {
+				                clipBoard = clipboardData.getData("text");
+				            }
+				            catch (subexeption) {
+				            }
+				        }
 
-						if (!clipBoard) {
-							return true;
-						}
+				        if (!clipBoard) {
+				            return true;
+				        }
 
-						var float = parseFloat(clipBoard);
-						if (!float || isNaN(float))
-							return false;
-					}
+				        return !isNaN(clipBoard);
+				    }
 				});
 			}
 		});
