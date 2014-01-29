@@ -25,15 +25,20 @@
 				            ctrlDown = true;
 				            return true;
 				        }
+
+				        var isDecimalPoint = charCode == 190 || charCode == 110;
+				        if (isDecimalPoint) {
+				            return $(this).val().indexOf(".") == -1;
+				        }
+
 				        var isMetaKeyPressed = ctrlDown || cmdDownLeft || cmdDownRight;
 				        if (charCode == 0 && isMetaKeyPressed) // bag in mac safari
 				            return true;
-				        var modificationChar = charCode == 86 || charCode == 88 || charCode == 90 || charCode == 67;
+				        var isModificationChar = charCode == 86 || charCode == 88 || charCode == 90 || charCode == 67;
 				        return (charCode > 32 && charCode < 57) ||           // navigation + main numbers
 							   (charCode > 95 && charCode < 106) ||          // right numbers
 							   charCode == 8 ||                              // backspace
-							   charCode == 190 || charCode == 110 ||         // decimal point
-							   (modificationChar && isMetaKeyPressed);         // ctrl + c (copy)
+							   (isModificationChar && isMetaKeyPressed);         // ctrl + c (copy)
 				        // more codes are here http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
 				    },
 				    keyup: function (e) {
